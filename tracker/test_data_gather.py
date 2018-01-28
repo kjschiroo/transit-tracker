@@ -72,3 +72,30 @@ def test_arrival_func_uses_route_dir_and_station(mock_client_cls, mock_utils):
     mock_client.get_timepoint_departures.assert_called_with(
         'route', 'direction', 'station_id'
     )
+
+
+def test_arrival_func_functional_test():
+    route = 902
+    direction = 3
+    station = 'SNUN'
+    arrival_func = dg.get_arrival_func(route, direction, station)
+
+    result = arrival_func()
+
+    assert isinstance(result, list)
+
+
+def test_active_stations_func_functional_test():
+    route = 902
+    direction = 3
+    station_coordinate_map = {
+        'SNUN': (44.955724, -93.167647),
+        'HMUN': (44.955746, -93.157051),
+    }
+    active_station_func = dg.get_active_stations_func(
+        route, direction, station_coordinate_map
+    )
+
+    result = active_station_func()
+
+    assert isinstance(result, list)
