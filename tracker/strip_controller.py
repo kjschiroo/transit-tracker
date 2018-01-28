@@ -1,6 +1,6 @@
 from time import sleep
 from collections import defaultdict
-# import neopixel
+import neopixel
 from . import color
 
 
