@@ -6,7 +6,7 @@ from . import color
 
 
 def _tracker_color_to_neopixel_color(tracker_color):
-    return neopixel.color(
+    return neopixel.Color(
         tracker_color.red, tracker_color.green, tracker_color.blue
     )
 
@@ -71,7 +71,7 @@ class StripController(object):
         total_steps = self._transition_step_count
         step_size = 1 / total_steps
         for step in range(total_steps):
-            for light in range(self._strip.numPixels):
+            for light in range(self._strip.numPixels()):
                 old_led_state = self._current_state[light]
                 new_led_state = new_state[light]
                 if new_led_state == old_led_state:
@@ -88,7 +88,8 @@ class StripController(object):
 
     def _get_target_state(self):
         target_state = defaultdict(lambda: color.TrackerColor(0, 0, 0))
-        for light, color_set in self._commands:
+        for light, color_set in self._commands.items():
             to_color = color_set.pop(0)
             color_set.append(to_color)
             target_state[light] = to_color
+        return target_state
