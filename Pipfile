@@ -1,0 +1,19 @@
+[[source]]
+
+verify_ssl = true
+name = "pypi"
+url = "https://pypi.python.org/simple"
+
+
+[packages]
+
+geopy = "*"
+mn-metrotransit = {git = "https://github.com/kjschiroo/mn-metrotransit.git"}
+
+
+[dev-packages]
+
+pytest = "*"
+coverage = "*"
+watchdog = "*"
+livereload = "*"
