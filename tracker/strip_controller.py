@@ -1,5 +1,6 @@
 from time import sleep
 from collections import defaultdict
+import threading
 import neopixel
 from . import color
 
