@@ -2,17 +2,15 @@ class ArrivalPattern(object):
 
     def __init__(
         self,
-        light_numbers,
-        time_color,
         light_time_map,
+        time_color_func,
         arrival_func,
         to_direction,
         station_color,
         outer_station_light
     ):
-        self._light_numbers = light_numbers
-        self._time_color_func = time_color_func
         self._light_time_map = light_time_map
+        self._time_color_func = time_color_func
         self._arrival_func = arrival_func
         self._to_direction = to_direction
         self._station_color = station_color
@@ -37,11 +35,11 @@ class ArrivalPattern(object):
         start = 0
         if self._direction.lower() == 'left':
             dir_coef = -1
-            start = len(self._light_numbers) - 1
+            start = len(self._light_time_map) - 1
         return start + (dir_coef * light_index)
 
     def _get_inner_station_light(self):
-        end = len(self._light_numbers) - 1
+        end = len(self._light_time_map) - 1
         if self._direction.lower() == 'left':
             end = 0
         return end
