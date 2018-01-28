@@ -37,7 +37,38 @@ def test_active_station_func_filters_on_direction(
     )
 
 
+@patch('tracker.data_gather.vincenty')
+def test_get_closest_station_returns_code_of_closest(mock_vincenty):
+    mock_station_map = MagicMock()
+    mock_station_map.items.return_value = [
+        ('CLOSE', 'COORDS'),
+        ('FAR', 'COORDS')
+    ]
+    # Order of values here must correspond to the order of the stations above
+    # since this is the order they will be returned by `vincenty`
+    mock_vincenty.side_effect = [MagicMock(meters=1), MagicMock(meters=1000)]
+    vehical_location = {'VehicleLatitude': 'some', 'VehicleLongitude': 'where'}
+
+    result = dg._get_closest_station(vehical_location, mock_station_map)
+
+    assert result == 'CLOSE'
+
+
 def test_get_arrival_func_returns_function():
     arrival_func = dg.get_arrival_func('route', 'direction', 'station_id')
 
     assert callable(arrival_func)
+
+
+@patch('tracker.data_gather.utils')
+@patch('tracker.data_gather.Client')
+def test_arrival_func_uses_route_dir_and_station(mock_client_cls, mock_utils):
+    mock_client = MagicMock()
+    mock_client_cls.return_value = mock_client
+
+    arrival_func = dg.get_arrival_func('route', 'direction', 'station_id')
+    arrival_func()
+
+    mock_client.get_timepoint_departures.assert_called_with(
+        'route', 'direction', 'station_id'
+    )

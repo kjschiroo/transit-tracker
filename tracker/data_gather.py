@@ -21,7 +21,7 @@ def get_active_stations_func(route, direction, station_coordinate_map):
 def _get_closest_station(vehicle_location, station_coordinate_map):
     veh_coord = (
         vehicle_location['VehicleLatitude'],
-        vehicle_location['VehicleLatitude']
+        vehicle_location['VehicleLongitude']
     )
     distances = [
         (station, vincenty(veh_coord, stat_cord).meters)
