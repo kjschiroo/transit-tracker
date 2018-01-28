@@ -7,7 +7,7 @@ from . import color
 
 def _tracker_color_to_neopixel_color(tracker_color):
     return neopixel.Color(
-        tracker_color.red, tracker_color.green, tracker_color.blue
+        tracker_color.green, tracker_color.red, tracker_color.blue
     )
 
 def _get_transition_color(old_color, new_color, step, total_steps):

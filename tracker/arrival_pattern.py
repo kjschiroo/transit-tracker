@@ -2,15 +2,17 @@ class ArrivalPattern(object):
 
     def __init__(
         self,
-        light_time_map,
+        light_numbers,
+        light_times,
         time_color_func,
         arrival_func,
         to_direction,
         station_color,
         outer_station_light
     ):
-        self._light_time_map = light_time_map
+        self._light_numbers = light_numbers
         self._time_color_func = time_color_func
+        self._light_times = light_times
         self._arrival_func = arrival_func
         self._to_direction = to_direction
         self._station_color = station_color
@@ -19,7 +21,7 @@ class ArrivalPattern(object):
     def run(self):
         commands = []
         arrival_times = self._arrival_func()
-        for i, (low, high) in enumerate(self._light_time_map):
+        for i, (low, high) in enumerate(self._light_times):
             times = [t for t in arrival_times if low < t and t <= high]
             if len(times) == 0:
                 continue
@@ -33,13 +35,13 @@ class ArrivalPattern(object):
     def _get_light_number(self, light_index):
         dir_coef = 1
         start = 0
-        if self._direction.lower() == 'left':
+        if self._to_direction.lower() == 'left':
             dir_coef = -1
-            start = len(self._light_time_map) - 1
-        return start + (dir_coef * light_index)
+            start = len(self._light_numbers) - 1
+        return self._light_numbers[start + (dir_coef * light_index)]
 
     def _get_inner_station_light(self):
-        end = len(self._light_time_map) - 1
-        if self._direction.lower() == 'left':
-            end = 0
-        return end
+        end = 0
+        if self._to_direction.lower() == 'left':
+            end = len(self._light_numbers) - 1
+        return self._light_numbers[end]
