@@ -27,4 +27,6 @@ class Tracker(object):
             sleep(self._interval)
 
     def _run_patterns(self):
-        return list(chain(*[pattern.run() for pattern in self._patterns]))
+        return list(
+            chain(*[pattern.run() for pattern in self._patterns.values()])
+        )

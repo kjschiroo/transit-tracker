@@ -1,6 +1,6 @@
 from datetime import datetime
 from geopy.distance import vincenty
-from mn_metrotransit import Client
+from mn_metrotransit import Client, NORTH, SOUTH, EAST, WEST
 from . import utils
 
 
