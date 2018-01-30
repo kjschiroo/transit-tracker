@@ -24,3 +24,6 @@ apt-get install python3-dev swig
 python3 ./setup.py build
 python3 ./setup.py install
 ```
+
+### Run on startup ###
+To get the script to start on startup add the command to run it to /etc/rc.local

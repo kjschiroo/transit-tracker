@@ -75,13 +75,16 @@ patterns['arrival'] = ArrivalPattern(
 
 
 # Setup map patterns
-station_coord_map = {
+green_blue_stations_coord_map = {
     'TF22': (44.983454, -93.278563),
     'TF12': (44.982736, -93.277117),
     'WAR2': (44.983454, -93.278563),
     '5SNI': (44.982736, -93.277117),
     'GOVT': (44.983454, -93.278563),
     'USB2': (44.982736, -93.277117),
+}
+
+blue_stations_coord_map = {
     'CDRV': (44.968304, -93.250985),
     'FRHI': (44.962653, -93.247116),
     'LAHI': (44.948343, -93.238866),
@@ -96,12 +99,10 @@ station_coord_map = {
     'BLCT': (44.856370, -93.226433),
     '28AV': (44.855756, -93.231688),
     'MAAM': (44.854280, -93.238857),
-    'TF22': (44.983454, -93.278563),
-    'TF12': (44.982736, -93.277117),
-    'WAR2': (44.983454, -93.278563),
-    '5SNI': (44.982736, -93.277117),
-    'GOVT': (44.983454, -93.278563),
-    'USB2': (44.982736, -93.277117),
+}
+blue_stations_coord_map.update(green_blue_stations_coord_map)
+
+green_stations_coord_map = {
     'WEBK': (44.971945, -93.246249),
     'EABK': (44.973671, -93.231104),
     'STVI': (44.974752, -93.222862),
@@ -120,6 +121,10 @@ station_coord_map = {
     '10CE': (44.950596, -93.097532),
     'CNST': (44.946178, -93.092275),
     'UNDP': (44.948189, -93.086793),
+}
+green_stations_coord_map.update(green_blue_stations_coord_map)
+
+red_stations_coord_map = {
     'APVY': (44.725670, -93.217764),
     'CE47': (44.735674, -93.217670),
     'CE14': (44.747151, -93.217649),
@@ -174,7 +179,7 @@ station_light_map = {
 
 ## East-bound Green line
 active_stations_func = dg.get_active_stations_func(
-    '902', dg.EAST, station_coord_map
+    '902', dg.EAST, green_stations_coord_map
 )
 
 patterns['e-green'] = MapPattern(
@@ -185,7 +190,7 @@ patterns['e-green'] = MapPattern(
 
 ## West-bound Green line
 active_stations_func = dg.get_active_stations_func(
-    '902', dg.WEST, station_coord_map
+    '902', dg.WEST, green_stations_coord_map
 )
 
 patterns['w-green'] = MapPattern(
@@ -196,7 +201,7 @@ patterns['w-green'] = MapPattern(
 
 ## South-bound Blue line
 active_stations_func = dg.get_active_stations_func(
-    '901', dg.SOUTH, station_coord_map
+    '901', dg.SOUTH, blue_stations_coord_map
 )
 
 patterns['s-blue'] = MapPattern(
@@ -207,7 +212,7 @@ patterns['s-blue'] = MapPattern(
 
 ## North-bound Blue line
 active_stations_func = dg.get_active_stations_func(
-    '901', dg.NORTH, station_coord_map
+    '901', dg.NORTH, blue_stations_coord_map
 )
 
 patterns['n-blue'] = MapPattern(
@@ -218,18 +223,18 @@ patterns['n-blue'] = MapPattern(
 
 ## South-bound Red line
 active_stations_func = dg.get_active_stations_func(
-    '903', dg.SOUTH, station_coord_map
+    '903', dg.SOUTH, red_stations_coord_map
 )
 
 patterns['s-red'] = MapPattern(
     station_light_map,
     active_stations_func,
-    TrackerColor(med, 0.2*med, dark)
+    TrackerColor(med, 0.5*med, dark)
 )
 
 ## North-bound Red line
 active_stations_func = dg.get_active_stations_func(
-    '903', dg.NORTH, station_coord_map
+    '903', dg.NORTH, red_stations_coord_map
 )
 
 patterns['n-red'] = MapPattern(
