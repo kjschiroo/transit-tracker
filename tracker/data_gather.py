@@ -1,5 +1,7 @@
 from datetime import datetime
 from geopy.distance import vincenty
+import requests
+
 from mn_metrotransit import Client, NORTH, SOUTH, EAST, WEST
 from . import utils
 
@@ -8,7 +10,10 @@ def get_active_stations_func(route, direction, station_coordinate_map):
 
     def active_station_func():
         client = Client()
-        raw_locations = client.get_vehicle_locations(route)
+        try:
+            raw_locations = client.get_vehicle_locations(route)
+        except requests.RequestException:
+            raw_locations = []
         directed = [l for l in raw_locations if l['Direction'] == direction]
         return [
             _get_closest_station(loc, station_coordinate_map)
@@ -35,9 +40,12 @@ def get_arrival_func(route, direction, station_id):
 
     def arrival_func():
         client = Client()
-        raw_arrivals = client.get_timepoint_departures(
-            route, direction, station_id
-        )
+        try:
+            raw_arrivals = client.get_timepoint_departures(
+                route, direction, station_id
+            )
+        except requests.RequestException:
+            raw_arrivals = []
         return [
             utils.seconds_from_now(arrival['DepartureTime'])
             for arrival in raw_arrivals
